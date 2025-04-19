@@ -1,26 +1,38 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Draggable from 'gsap/Draggable';
+import debounce from 'lodash/debounce';
 import './Carousel.css';
 
 const COVERS = [
-    "https://i.scdn.co/image/ab67616d00001e020ecc8c4fd215d9eb83cbfdb3",
-    "https://i.scdn.co/image/ab67616d00001e02d9194aa18fa4c9362b47464f",
-    "https://i.scdn.co/image/ab67616d00001e02a7ea08ab3914c5fb2084a8ac",
-    "https://i.scdn.co/image/ab67616d00001e0213ca80c3035333e5a6fcea59",
-    "https://i.scdn.co/image/ab67616d00001e02df04e6071763615d44643725",
-    "https://i.scdn.co/image/ab67616d00001e0239c7302c04f8d06f60e14403",
-    "https://i.scdn.co/image/ab67616d00001e021c0bcf8b536295438d26c70d",
-    "https://i.scdn.co/image/ab67616d00001e029bbd79106e510d13a9a5ec33",
-    "https://i.scdn.co/image/ab67616d00001e021d97ca7376f835055f828139",
-    "https://www.udiscovermusic.com/wp-content/uploads/2015/10/Kanye-West-Yeezus.jpg",
+    "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*IOWhMijeI03LYVmVhW4QXw.jpeg",
+    "https://sigchi.iiitd.ac.in/_next/static/media/image1.a1adfd7b.svg",
+    "/src/images/mast.png",
+    "https://img.electronicdesign.com/files/base/ebm/electronicdesign/image/2020/11/RISC_V_logo.5fa1b8aab3304.png?auto=format%2Ccompress&w=640&width=640",
+    "https://sigchi.iiitd.ac.in/_next/static/media/image1.a1adfd7b.svg",
+    "https://img.freepik.com/free-vector/navigation-concept-illustration_114360-956.jpg",
+    "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*IOWhMijeI03LYVmVhW4QXw.jpeg",
+    "https://sigchi.iiitd.ac.in/_next/static/media/image1.a1adfd7b.svg",
+    "/src/images/mast.png",
+    "https://img.electronicdesign.com/files/base/ebm/electronicdesign/image/2020/11/RISC_V_logo.5fa1b8aab3304.png?auto=format%2Ccompress&w=640&width=640",
   ];
 
-  export default function AlbumCarousel() {
+  export default function AlbumCarousel({ onSlideChange }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
     const containerRef = useRef(null);
     const boxesRef = useRef([]);
     const proxyRef = useRef(null);
+  
+    // Debounced slide change handler
+    const debouncedSlideChange = useRef(
+      debounce((index) => {
+        if (currentIndex !== index) {
+          setCurrentIndex(index);
+          onSlideChange?.(index);
+        }
+      }, 150)
+    ).current;
   
     useEffect(() => {
       gsap.registerPlugin(ScrollTrigger, Draggable);
@@ -135,10 +147,17 @@ const COVERS = [
           gsap.utils.wrap(0, 1, progress) * trigger.end
         );
 
+      const updateActiveSlide = (position) => {
+        const normalizedPos = gsap.utils.wrap(0, 1, position);
+        const index = Math.round(normalizedPos * boxes.length) % boxes.length;
+        debouncedSlideChange(index);
+      };
+
       const scrollToPosition = position => {
         const snapPos = snap(position);
         const progress = (snapPos - head.duration() * iteration) / head.duration();
         const scroll = progressToScroll(progress);
+        updateActiveSlide(snapPos);
         if (progress >= 1 || progress < 0) return wrapIteration(Math.floor(progress), scroll);
         trigger.scroll(scroll);
       };
@@ -159,6 +178,7 @@ const COVERS = [
             const newPos = (iteration + self.progress) * head.duration();
             scrub.vars.pos = newPos;
             scrub.invalidate().restart();
+            updateActiveSlide(newPos);
           }
         }
       });
@@ -178,8 +198,10 @@ const COVERS = [
         trigger: '.box',
         onPress() { this.startOffset = scrub.vars.pos; },
         onDrag() {
-          scrub.vars.pos = this.startOffset + (this.startX - this.x) * 0.001;
+          const newPos = this.startOffset + (this.startX - this.x) * 0.001;
+          scrub.vars.pos = newPos;
           scrub.invalidate().restart();
+          updateActiveSlide(newPos);
         },
         onDragEnd() {
           scrollToPosition(scrub.vars.pos);
@@ -219,11 +241,12 @@ const COVERS = [
   
       // Cleanup
       return () => {
+        debouncedSlideChange.cancel();
         ScrollTrigger.killAll();
         document.removeEventListener('keydown', handleKeydown);
         containerRef.current?.removeEventListener('click', handleBoxClick);
       };
-    }, []);
+    }, [onSlideChange]);
   
     return (
       <div ref={containerRef} className="boxes">

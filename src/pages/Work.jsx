@@ -134,6 +134,20 @@ function Work() {
   const [loadStage, setLoadStage] = useState('strip');
   const [hoveredNav, setHoveredNav] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeAlbumIdx, setActiveAlbumIdx] = useState(0);
+  
+  const ALBUMS_DATA = [
+    { title: "Angry Bird Clone", subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression." },
+    { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
+    { title: "MAST AI", subtitle: "MySQL + Machine learning Project" },
+    { title: "RISC-V Project", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
+    { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
+    { title: "NAV IQ", subtitle: "An Android app prototype with AR-based indoor navigation for the R&D building, helping users find rooms and view professor information easily." },
+    { title: "Angry Bird Clone", subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression." },
+    { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
+    { title: "MAST AI", subtitle: "MySQL + Machine learning Project" },
+    { title: "RISC-V Project", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1100);
@@ -324,16 +338,33 @@ function Work() {
 
               {/* Main Content */}
               <div className="w-full flex flex-col items-center pt-32 relative z-10">
-                <h1 className="text-7xl font-roxborough-italic mb-4">
-                  Selected Work
-                </h1>
-                <p className="text-xl font-roobertregular mb-16 opacity-80">
-                  Projects & Collaborations
-                </p>
+                <AnimatePresence mode="wait">
+                  <motion.h1
+                    key={`title-${activeAlbumIdx}`}
+                    className="text-7xl font-roxborough-italic mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                  >
+                    {ALBUMS_DATA[activeAlbumIdx]?.title || "Selected Work"}
+                  </motion.h1>
+                  <motion.p
+                    key={`subtitle-${activeAlbumIdx}`}
+                    className="text-xl font-roobertregular mb-16 opacity-80 mx-auto text-center"
+                    style={{ maxWidth: '37rem' }}  // Add max-width constraint
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                  >
+                    {ALBUMS_DATA[activeAlbumIdx]?.subtitle || "Projects & Collaborations"}
+                  </motion.p>
+                </AnimatePresence>
                 
                 {/* Carousel Container */}
                 <div className="w-full h-[20vh] relative">
-                  <AlbumCarousel />
+                  <AlbumCarousel onSlideChange={setActiveAlbumIdx} />
                 </div>
               </div>
             </div>

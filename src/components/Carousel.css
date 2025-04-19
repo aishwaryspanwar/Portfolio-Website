@@ -12,8 +12,8 @@
 
 .box {
   position: absolute;
-  top: 50%;
-  left: 44%;
+  top: 10%;
+  left: 43%;
   width: 32vmin; /* Reduced from 25vmin */
   height: 30vmin; /* Reduced from 25vmin */
   min-width: 180px; /* Reduced from 200px */
@@ -57,7 +57,7 @@
 
 .controls {
   position: absolute;
-  bottom: -4rem; /* Move controls down */
+  bottom: -2rem; /* Move controls down */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
