@@ -677,19 +677,23 @@ function App() {
                       <div className="fixed"
                         style={{
                           top: '78%',
-                          left: '48%',
+                          left: '50%',
                           transform: 'translate(-50%, -50%)',
                           zIndex: 1,
-                          width: '34em', // Increased from 200px
+                          width: '20em', // Increased from 200px
                           height: 'auto'
                         }}
                       >
-                        <img
-                          src="/src/images/aishusitting.png"
-                          alt="Artboard"
+                        <video
+                          src="/src/images/loop-video.mp4"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
                           style={{
                             width: '100%',
-                            height: '100%'
+                            height: '100%',
+                            objectFit: 'cover'
                           }}
                         />
                       </div>
