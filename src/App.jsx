@@ -553,7 +553,7 @@ function App() {
                         }}
                       >
                         <img
-                          src="/src/images/Artboard 1.png"
+                          src="/src/images/aishusitting.png"
                           alt="Artboard"
                           style={{
                             width: '100%',
