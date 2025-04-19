@@ -400,7 +400,7 @@ function App() {
                           }}
                         >
                           <img
-                            src="/src/images/icons8-github.svg"
+                            src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/icons8-github.svg"
                             alt="GitHub"
                             style={{ width: '1.6rem', height: '1.6rem', objectFit: 'contain' }} // Reduced from 2.2rem
                           />
@@ -421,7 +421,7 @@ function App() {
                           }}
                         >
                           <img
-                            src="/src/images/icons8-linkedin.svg"
+                            src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/icons8-linkedin.svg"
                             alt="LinkedIn"
                             style={{ width: '1.6rem', height: '1.6rem', objectFit: 'contain' }} // Reduced from 2.2rem
                           />
@@ -528,7 +528,7 @@ function App() {
                         }}
                       >
                         <img
-                          src="/src/images/Shapes.svg"  // Changed to use direct path
+                          src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/Shapes.svg"  // Changed to use direct path
                           alt="Shape"
                           className="absolute"
                           style={{
@@ -553,7 +553,7 @@ function App() {
                         }}
                       >
                         <img
-                          src="/src/images/Artboard 1.png"
+                          src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/Artboard%201.png"
                           alt="Artboard"
                           style={{
                             width: '100%',
