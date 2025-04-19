@@ -140,13 +140,13 @@ function Work() {
     { title: "Angry Bird Clone", subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression." },
     { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
     { title: "MAST AI", subtitle: "MySQL + Machine learning Project" },
-    { title: "RISC-V Project", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
+    { title: "RISC32I Assembler - Simulato", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
     { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
     { title: "NAV IQ", subtitle: "An Android app prototype with AR-based indoor navigation for the R&D building, helping users find rooms and view professor information easily." },
     { title: "Angry Bird Clone", subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression." },
     { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
     { title: "MAST AI", subtitle: "MySQL + Machine learning Project" },
-    { title: "RISC-V Project", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
+    { title: "RISC32I Assembler - Simulato", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
   ];
 
   useEffect(() => {
