@@ -1,0 +1,10 @@
+.work-content {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.loading .work-content {
+  opacity: 0;
+}
+
+/* Add any additional styles needed for the work page */

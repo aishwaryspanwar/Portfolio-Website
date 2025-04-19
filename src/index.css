@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @font-face {
+    font-family: 'Against-Regular';
+    src: url('./fonts/against regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Harmond-SemiBoldCondensed';
+    src: url('./fonts/Harmond-SemiBoldCondensed.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'RoobertSemiMono';
+    src: url('./fonts/RoobertSemiMonoTRIAL-Regular-BF67243fd53ad6a.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roxborough CF';
+    src: url('./fonts/Roxborough CF.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'RoobertMonoTrial';
+    src: url('./fonts/RoobertMonoTRIAL-Regular-BF67243fd29a433.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'RoobertMedium';
+    src: url('./fonts/Roobert-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'RoobertRegular';
+    src: url('./fonts/Roobert-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'RoxboroughCFRegularItalic';
+    src: url('./fonts/RoxboroughCF-RegularItalic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  /* Utility class for Roxborough CF font */
+  .font-roxborough {
+    font-family: 'Roxborough CF', serif;
+  }
+
+  .font-roobertmono {
+    font-family: 'RoobertMonoTrial', monospace;
+  }
+
+  .font-roobertmedium {
+    font-family: 'RoobertMedium', sans-serif;
+  }
+
+  .font-roobertregular {
+    font-family: 'RoobertRegular', sans-serif;
+    font-weight: 400;
+  }
+
+  .font-roxborough-italic {
+    font-family: 'RoxboroughCFRegularItalic', serif;
+    font-style: italic;
+  }
+
+  /* Carousel-specific resets */
+  .boxes * {
+    box-sizing: border-box;
+  }
+
+  .boxes button {
+    all: unset;
+  }
