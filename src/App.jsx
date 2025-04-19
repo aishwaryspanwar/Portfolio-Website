@@ -41,6 +41,7 @@ function App() {
   const [loadStage, setLoadStage] = useState('strip');
   const [hoveredNav, setHoveredNav] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [hideTrailCursor, setHideTrailCursor] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1100); // Reduced duration to 900ms
@@ -276,7 +277,7 @@ function App() {
             path="/"
             element={
               <div>
-                <CircleTrail />
+                <CircleTrail hidden={hideTrailCursor} />
                 <AnimatePresence>
                   <LoadingCursor mousePosition={mousePosition} loadStage={loadStage} />
                 </AnimatePresence>
@@ -345,7 +346,8 @@ function App() {
                       className="min-h-screen flex flex-col items-center"
                       style={{
                         backgroundColor: "#ebebeb",
-                        color: "#1c1c1c"
+                        color: "#1c1c1c",
+                        cursor: "none" // Hide the default mouse cursor
                       }}
                     >
                       {/* Collaboration text */}
@@ -392,17 +394,32 @@ function App() {
                             display: 'inline-flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: '1.8rem', // Reduced from 2.5rem
-                            height: '1.8rem', // Reduced from 2.5rem
+                            width: '1.8rem',
+                            height: '1.8rem',
                             borderRadius: '50%',
                             background: 'transparent',
                             transition: 'background 0.2s',
+                            cursor: 'none'
+                          }}
+                          onMouseEnter={e => {
+                            setHideTrailCursor(true);
+                            e.currentTarget.firstChild.style.transform = 'scale(1.25)';
+                            e.currentTarget.firstChild.style.transition = 'transform 0.25s cubic-bezier(0.4,0,0.2,1)';
+                          }}
+                          onMouseLeave={e => {
+                            setHideTrailCursor(false);
+                            e.currentTarget.firstChild.style.transform = 'scale(1)';
                           }}
                         >
                           <img
-                            src="/src/images/icons8-github.svg"
+                            src="https://icons8.comundefinedhttps://img.icons8.com/ios-glyphs/30/github.png"
                             alt="GitHub"
-                            style={{ width: '1.6rem', height: '1.6rem', objectFit: 'contain' }} // Reduced from 2.2rem
+                            style={{
+                              width: '1.6rem',
+                              height: '1.6rem',
+                              objectFit: 'contain',
+                              transition: 'transform 0.25s cubic-bezier(0.4,0,0.2,1)'
+                            }}
                           />
                         </a>
                         <a
@@ -413,17 +430,32 @@ function App() {
                             display: 'inline-flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: '1.8rem', // Reduced from 2.5rem
-                            height: '1.8rem', // Reduced from 2.5rem
+                            width: '1.8rem',
+                            height: '1.8rem',
                             borderRadius: '50%',
                             background: 'transparent',
                             transition: 'background 0.2s',
+                            cursor: 'none'
+                          }}
+                          onMouseEnter={e => {
+                            setHideTrailCursor(true);
+                            e.currentTarget.firstChild.style.transform = 'scale(1.25)';
+                            e.currentTarget.firstChild.style.transition = 'transform 0.25s cubic-bezier(0.4,0,0.2,1)';
+                          }}
+                          onMouseLeave={e => {
+                            setHideTrailCursor(false);
+                            e.currentTarget.firstChild.style.transform = 'scale(1)';
                           }}
                         >
                           <img
-                            src="/src/images/icons8-linkedin.svg"
+                            src="https://img.icons8.com/ios-filled/50/linkedin.png"
                             alt="LinkedIn"
-                            style={{ width: '1.6rem', height: '1.6rem', objectFit: 'contain' }} // Reduced from 2.2rem
+                            style={{
+                              width: '1.6rem',
+                              height: '1.6rem',
+                              objectFit: 'contain',
+                              transition: 'transform 0.25s cubic-bezier(0.4,0,0.2,1)'
+                            }}
                           />
                         </a>
                         <a
@@ -432,17 +464,32 @@ function App() {
                             display: 'inline-flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: '1.8rem', // Reduced from 2.5rem
-                            height: '1.8rem', // Reduced from 2.5rem
+                            width: '1.8rem',
+                            height: '1.8rem',
                             borderRadius: '50%',
                             background: 'transparent',
                             transition: 'background 0.2s',
+                            cursor: 'none'
+                          }}
+                          onMouseEnter={e => {
+                            setHideTrailCursor(true);
+                            e.currentTarget.firstChild.style.transform = 'scale(1.25)';
+                            e.currentTarget.firstChild.style.transition = 'transform 0.25s cubic-bezier(0.4,0,0.2,1)';
+                          }}
+                          onMouseLeave={e => {
+                            setHideTrailCursor(false);
+                            e.currentTarget.firstChild.style.transform = 'scale(1)';
                           }}
                         >
                           <img
-                            src="/src/images/mail.png"
+                            src="https://img.icons8.com/material-rounded/24/mail.png"
                             alt="Mail"
-                            style={{ width: '1.6rem', height: '1.6rem', objectFit: 'contain' }} // Reduced from 2.2rem
+                            style={{
+                              width: '1.6rem',
+                              height: '1.6rem',
+                              objectFit: 'contain',
+                              transition: 'transform 0.25s cubic-bezier(0.4,0,0.2,1)'
+                            }}
                           />
                         </a>
                       </div>
@@ -529,19 +576,19 @@ function App() {
                       >
                         <img
                           src="https://huyml.co/Images/Shapes.svg"  // Changed to use direct path
-                          alt="Shape"
-                          className="absolute"
-                          style={{
+                            alt="Shape"
+                            className="absolute"
+                            style={{
                             top: '-60px',
                             left: '50%',
                             transform: 'translateX(-50%)',
                             width: '1.6rem',
-                          }}
-                        />
-                        AISHWARY PANWAR (HE/HIM) IS A DRIVEN SOPHOMORE ENGINEERING STUDENT BASED IN NEW DELHI, INDIA.
-                      </div>
+                            }}
+                          />
+                          AISHWARY PANWAR (HE/HIM) IS A DRIVEN SOPHOMORE ENGINEERING STUDENT STUDYING AT IIIT DELHI, BASED IN NEW DELHI, INDIA.
+                          </div>
 
-                      {/* Center Animation */}
+                          {/* Center Animation */}
                       <div className="fixed"
                         style={{
                           top: '78%',
@@ -655,7 +702,12 @@ function App() {
           <Route
             path="/contact"
             element={
-              <div>
+              <div
+                style={{
+                  minHeight: "100vh",
+                  cursor: "none" // Hide the default mouse cursor
+                }}
+              >
                 <Contact />
                 <FolioHeader />
               </div>
@@ -664,7 +716,12 @@ function App() {
           <Route
             path="/work"
             element={
-              <div>
+              <div
+                style={{
+                  minHeight: "100vh",
+                  cursor: "none" // Hide the default mouse cursor
+                }}
+              >
                 <Work />
                 <FolioHeader />
               </div>
