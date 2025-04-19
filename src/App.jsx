@@ -400,7 +400,7 @@ function App() {
                           }}
                         >
                           <img
-                            src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/icons8-github.svg"
+                            src="/src/images/icons8-github.svg"
                             alt="GitHub"
                             style={{ width: '1.6rem', height: '1.6rem', objectFit: 'contain' }} // Reduced from 2.2rem
                           />
@@ -421,7 +421,7 @@ function App() {
                           }}
                         >
                           <img
-                            src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/icons8-linkedin.svg"
+                            src="/src/images/icons8-linkedin.svg"
                             alt="LinkedIn"
                             style={{ width: '1.6rem', height: '1.6rem', objectFit: 'contain' }} // Reduced from 2.2rem
                           />
@@ -528,7 +528,7 @@ function App() {
                         }}
                       >
                         <img
-                          src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/Shapes.svg"  // Changed to use direct path
+                          src="https://huyml.co/Images/Shapes.svg"  // Changed to use direct path
                           alt="Shape"
                           className="absolute"
                           style={{
@@ -553,7 +553,7 @@ function App() {
                         }}
                       >
                         <img
-                          src="https://github.com/aishwaryspanwar/Portfolio-Website/blob/master/src/images/Artboard%201.png"
+                          src="/src/images/Artboard 1.png"
                           alt="Artboard"
                           style={{
                             width: '100%',
@@ -575,7 +575,7 @@ function App() {
                           }}
                           >
                           <img
-                            src="/src/images/Shapes.svg"
+                            src="https://huyml.co/Images/Shapes.svg"
                             alt="SHAPE"
                             className="absolute"
                             style={{
