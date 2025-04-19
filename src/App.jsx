@@ -412,7 +412,7 @@ function App() {
                           }}
                         >
                           <img
-                            src="https://icons8.comundefinedhttps://img.icons8.com/ios-glyphs/30/github.png"
+                            src="https://img.icons8.com/ios-glyphs/30/github.png"
                             alt="GitHub"
                             style={{
                               width: '1.6rem',
