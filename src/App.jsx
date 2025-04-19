@@ -32,6 +32,85 @@ const FolioHeader = () => (
   </div>
 );
 
+const PageWithLoading = ({ children, pageKey }) => {
+  const [pageLoading, setPageLoading] = useState(true);
+  const [pageLoadStage, setPageLoadStage] = useState('strip');
+
+  useEffect(() => {
+    setPageLoading(true);
+    setPageLoadStage('strip');
+    const timers = [
+      setTimeout(() => setPageLoadStage('expand'), 400),
+      setTimeout(() => setPageLoadStage('break'), 2400),
+      setTimeout(() => setPageLoadStage('done'), 3400),
+      setTimeout(() => setPageLoading(false), 1100)
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [pageKey]);
+
+  return (
+    <div>
+      {pageLoadStage !== 'done' && (
+        <div className="fixed inset-0 z-50 pointer-events-none" style={{ overflow: 'hidden' }}>
+          {pageLoadStage === 'strip' && (
+            <div className="absolute inset-0" style={{ background: '#ebebeb', zIndex: 0 }} />
+          )}
+          {/* Top strip */}
+          <div
+            className={`
+              absolute left-0 w-full
+              transition-all duration-400
+              ${pageLoadStage === 'strip' ? 'top-[41.5%] h-[9%]' : 'top-0 h-1/2'}
+              ${pageLoadStage === 'break' ? '-translate-y-full' : ''}
+            `}
+            style={{
+              background: '#090909',
+              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1)',
+              zIndex: 3,
+            }}
+          />
+          {/* Bottom strip */}
+          <div
+            className={`
+              absolute left-0 w-full
+              transition-all duration-400
+              ${pageLoadStage === 'strip' ? 'top-[50.5%] h-[9%]' : 'top-1/2 h-1/2'}
+              ${pageLoadStage === 'break' ? 'translate-y-full' : ''}
+            `}
+            style={{
+              background: '#090909',
+              transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.5s cubic-bezier(0.4,0,0.2,1)',
+              zIndex: 3,
+            }}
+          />
+          {/* Home text only during strip and expand */}
+          {(pageLoadStage === 'strip' || pageLoadStage === 'expand') && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{
+                zIndex: 10,
+              }}
+            >
+              <span
+                style={{
+                  color: pageLoadStage === 'strip' ? '#262626' : '#ffffff',
+                  transition: 'color 0.4s cubic-bezier(0.4,0,0.2,1)',
+                  transitionDelay: '0.4s',
+                  fontSize: '9rem', // Match navbar label
+                  letterSpacing: '0.156em', // Match navbar label
+                }}
+              >
+                <span className="font-roxborough-italic">H</span>
+                <span className="font-roobertregular">ome</span>
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+      {!pageLoading && children}
+    </div>
+  );
+};
+
 function App() {
   // This state manages dark mode.
   const [isDark, setIsDark] = useState(false);
@@ -42,6 +121,7 @@ function App() {
   const [hoveredNav, setHoveredNav] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hideTrailCursor, setHideTrailCursor] = useState(false);
+  const [homeKey, setHomeKey] = useState(Date.now());
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1100); // Reduced duration to 900ms
@@ -237,10 +317,10 @@ function App() {
       style={{
         display: 'flex',
         gap: '0.1em',
-        fontWeight: 650,
-        fontSize: '8.67rem', // Increased from 8.5rem by 2%
+        fontWeight: 550,
+        fontSize: '9rem', // Match navbar label and loadscreen
         color: '#262626',
-        letterSpacing: '0.08em',
+        letterSpacing: '0.08em', // Match navbar label and loadscreen
         zIndex: 1,
         textAlign: 'center',
         lineHeight: 1.1,
@@ -269,6 +349,11 @@ function App() {
     </motion.div>
   );
 
+  const handleHomeClick = () => {
+    setHomeKey(Date.now());
+    window.history.pushState({}, '', '/');
+  };
+
   return (
     <ThemeProvider>
       <Router>
@@ -276,7 +361,7 @@ function App() {
           <Route
             path="/"
             element={
-              <div>
+              <PageWithLoading pageKey={homeKey}>
                 <CircleTrail hidden={hideTrailCursor} />
                 <AnimatePresence>
                   <LoadingCursor mousePosition={mousePosition} loadStage={loadStage} />
@@ -527,11 +612,11 @@ function App() {
                         <ul className="flex space-x-[28rem] text-s font-sans relative z-10">
                           <li
                             className="flip-link"
-                            onMouseEnter={() => setHoveredNav("About")}
+                            onMouseEnter={() => setHoveredNav("Home")}
                             onMouseLeave={() => setHoveredNav(null)}
                           >
                             <div className="font-roobertregular" style={{ fontSize: '0.605rem', opacity: 0.7, marginBottom: '0.2rem', fontWeight: 650 }}>01</div>
-                            <FlipLink onClick={() => window.location.reload()}>About</FlipLink>
+                            <FlipLink onClick={handleHomeClick}>Home</FlipLink>
                           </li>
                           <li
                             className="flip-link"
@@ -696,7 +781,7 @@ function App() {
                     </div>
                   )}
                 </div>
-              </div>
+              </PageWithLoading>
             }
           />
           <Route
@@ -705,7 +790,7 @@ function App() {
               <div
                 style={{
                   minHeight: "100vh",
-                  cursor: "none" // Hide the default mouse cursor
+                  cursor: "none"
                 }}
               >
                 <Contact />
@@ -719,7 +804,7 @@ function App() {
               <div
                 style={{
                   minHeight: "100vh",
-                  cursor: "none" // Hide the default mouse cursor
+                  cursor: "none"
                 }}
               >
                 <Work />

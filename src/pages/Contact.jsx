@@ -92,7 +92,7 @@ const StaggeredLabel = ({ text }) => (
     style={{
       display: 'flex',
       gap: '0.1em',
-      fontWeight: 700,
+      fontWeight: 550,
       fontSize: '8.67rem', // Increased from 8.5rem by 2%
       color: '#262626',
       letterSpacing: '0.08em',
@@ -307,11 +307,11 @@ function Contact() {
                 <ul className="flex space-x-[28rem] text-s font-sans relative z-10">
                   <li
                     className="flip-link"
-                    onMouseEnter={() => setHoveredNav("About")}
+                    onMouseEnter={() => setHoveredNav("Home")}
                     onMouseLeave={() => setHoveredNav(null)}
                   >
                     <div className="font-roobertregular" style={{ fontSize: '0.605rem', opacity: 0.7, marginBottom: '0.2rem', fontWeight: 650 }}>01</div>
-                    <FlipLink to="/">About</FlipLink>
+                    <FlipLink to="/">Home</FlipLink>
                   </li>
                   <li
                     className="flip-link"

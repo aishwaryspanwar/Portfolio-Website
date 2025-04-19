@@ -97,7 +97,7 @@ const StaggeredLabel = ({ text }) => (
     style={{
       display: 'flex',
       gap: '0.1em',
-      fontWeight: 650,
+      fontWeight: 550,
       fontSize: '8.67rem',
       color: '#262626',
       letterSpacing: '0.08em',
