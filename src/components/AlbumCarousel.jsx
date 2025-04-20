@@ -4,6 +4,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Draggable from 'gsap/Draggable';
 import debounce from 'lodash/debounce';
 import './Carousel.css';
+import audioFile from '/src/audio/audio.mp3';  // Using absolute path from src root
 
 const COVERS = [
     "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*IOWhMijeI03LYVmVhW4QXw.jpeg",
@@ -23,6 +24,13 @@ const COVERS = [
     const containerRef = useRef(null);
     const boxesRef = useRef([]);
     const proxyRef = useRef(null);
+    const audioRef = useRef(new Audio(audioFile));
+
+    // Play sound function
+    const playClickSound = () => {
+      audioRef.current.currentTime = 0; // Reset audio to start
+      audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+    };
   
     // Debounced slide change handler
     const debouncedSlideChange = useRef(
@@ -183,8 +191,14 @@ const COVERS = [
         }
       });
   
-      const next = () => scrollToPosition(scrub.vars.pos - 1 / boxes.length);
-      const prev = () => scrollToPosition(scrub.vars.pos + 1 / boxes.length);
+      const next = () => {
+        playClickSound();
+        scrollToPosition(scrub.vars.pos - 1 / boxes.length);
+      };
+      const prev = () => {
+        playClickSound();
+        scrollToPosition(scrub.vars.pos + 1 / boxes.length);
+      };
   
       ScrollTrigger.addEventListener('scrollEnd', () => 
         scrollToPosition(scrub.vars.pos)
@@ -220,6 +234,7 @@ const COVERS = [
       const handleBoxClick = (e) => {
         const box = e.target.closest('.box');
         if (box) {
+          playClickSound();
           const target = boxes.indexOf(box);
           const current = gsap.utils.wrap(
             0,
@@ -245,6 +260,8 @@ const COVERS = [
         ScrollTrigger.killAll();
         document.removeEventListener('keydown', handleKeydown);
         containerRef.current?.removeEventListener('click', handleBoxClick);
+        audioRef.current.pause();
+        audioRef.current.src = '';
       };
     }, [onSlideChange]);
   
