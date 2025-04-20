@@ -5,6 +5,7 @@ import { ThemeProvider } from "../context/ThemeContext";
 import CircleTrail from "../components/CircleTrail";
 import LoadingCursor from '../components/LoadingCursor';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import "./Contact.css";
 
 const DURATION = 0.25;
 const STAGGER = 0.025;
@@ -254,8 +255,9 @@ function Contact() {
             <div
               className="min-h-screen flex flex-col items-center"
               style={{
-                backgroundColor: "#ebebeb",
-                color: "#1c1c1c"
+                backgroundColor: "var(--bg-color)",
+                color: "var(--text-color)",
+                cursor: "none"
               }}
             >
               {/* Collaboration text */}
@@ -281,22 +283,22 @@ function Contact() {
                 className="fixed top-1/2 left-0 transform -translate-y-1/2 w-full flex justify-center bg-transparent overflow-hidden transition-all duration-500 group"
                 style={{
                   height: '4%',
-                  backgroundColor: '#ebebeb',
-                  color: "#1c1c1c",
+                  backgroundColor: 'var(--bg-color)',
+                  color: "var(--text-color)",
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.height = '17%';
-                  e.currentTarget.style.backgroundColor = '#1c1c1c';
+                  e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
                   e.currentTarget.style.paddingTop = '2.8rem';
                   const links = e.currentTarget.querySelectorAll('.flip-link, .copyright-text');
-                  links.forEach(link => link.style.color = '#fff');
+                  links.forEach(link => link.style.color = 'var(--hover-text)');
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.height = '4%';
-                  e.currentTarget.style.backgroundColor = '#ebebeb';
+                  e.currentTarget.style.backgroundColor = 'var(--bg-color)';
                   e.currentTarget.style.paddingTop = '0rem';
                   const links = e.currentTarget.querySelectorAll('.flip-link, .copyright-text');
-                  links.forEach(link => link.style.color = "#1c1c1c");
+                  links.forEach(link => link.style.color = "var(--text-color)");
                   setHoveredNav(null);
                 }}
               >
@@ -361,7 +363,14 @@ function Contact() {
                   {/* Left Column */}
                   <div className="space-y-8">
                     <div>
-                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Tech</h2>
+                      <h2 className="text-lg font-roobertregular mb-3" 
+                          style={{ 
+                            opacity: 1, 
+                            fontWeight: 500, 
+                            color: "var(--text-color)" 
+                          }}>
+                        Tech
+                      </h2>
                       <div className="space-y-2">
                         <a 
                           href="https://leetcode.com/u/homelander0_0/" 
@@ -394,7 +403,14 @@ function Contact() {
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Social</h2>
+                      <h2 className="text-lg font-roobertregular mb-3" 
+                          style={{ 
+                            opacity: 1, 
+                            fontWeight: 500, 
+                            color: "var(--text-color)" 
+                          }}>
+                        Social
+                      </h2>
                       <div className="space-y-2">
                         {/* Removed Facebook link */}
                         <a 
@@ -432,7 +448,14 @@ function Contact() {
                   {/* Right Column (now next to left) */}
                   <div className="space-y-8">
                     <div>
-                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Portfolio</h2>
+                      <h2 className="text-lg font-roobertregular mb-3" 
+                          style={{ 
+                            opacity: 1, 
+                            fontWeight: 500, 
+                            color: "var(--text-color)" 
+                          }}>
+                        Portfolio
+                      </h2>
                       <div className="space-y-2">
                         <a 
                           href="https://www.behance.net/aishwaryspanwar" 
@@ -451,7 +474,14 @@ function Contact() {
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Email</h2>
+                      <h2 className="text-lg font-roobertregular mb-3" 
+                          style={{ 
+                            opacity: 1, 
+                            fontWeight: 500, 
+                            color: "var(--text-color)" 
+                          }}>
+                        Email
+                      </h2>
                       <div className="space-y-2">
                         <a
                           href="https://mail.google.com/mail/?view=cm&fs=1&to=aishwarypanwar@gmail.com&su=Loved%20Your%20Portfolio%20Website!"
@@ -480,7 +510,7 @@ function Contact() {
                   style={{
                     fontWeight: 400,
                     fontSize: '4.8rem',
-                    color: '#1C1C1C',
+                    color: 'var(--text-color)', // Changed from hardcoded #1C1C1C
                     letterSpacing: '-0.05em',
                     maxWidth: '100%',
                     lineHeight: '1.1'

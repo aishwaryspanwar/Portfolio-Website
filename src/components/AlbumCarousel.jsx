@@ -249,23 +249,27 @@ const COVERS = [
     }, [onSlideChange]);
   
     return (
-      <div ref={containerRef} className="boxes">
-        {COVERS.map((src, i) => (
-          <div
-            key={i}
-            className="box"
-            ref={el => (boxesRef.current[i] = el)}
-            style={{ '--src': `url(${src})` }}
-          >
-            <span className="visually-hidden">Album {i + 1}</span>
-            <img src={src} alt={`Album cover ${i + 1}`} />
-          </div>
-        ))}
-        <div className="controls">
-          <button className="next"><span className="visually-hidden">Previous album</span>◀</button>
-          <button className="prev"><span className="visually-hidden">Next album</span>▶</button>
+      <>
+        <button className="next control-button left-control">
+          <span className="visually-hidden">Previous album</span>
+        </button>
+        <div ref={containerRef} className="boxes">
+          {COVERS.map((src, i) => (
+            <div
+              key={i}
+              className="box"
+              ref={el => (boxesRef.current[i] = el)}
+              style={{ '--src': `url(${src})` }}
+            >
+              <span className="visually-hidden">Album {i + 1}</span>
+              <img src={src} alt={`Album cover {i + 1}`} />
+            </div>
+          ))}
         </div>
+        <button className="prev control-button right-control">
+          <span className="visually-hidden">Next album</span>
+        </button>
         <div ref={proxyRef} className="drag-proxy"></div>
-      </div>
+      </>
     );
   }

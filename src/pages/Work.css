@@ -1,3 +1,34 @@
+:root {
+  --bg-color: #EBEBEB;
+  --text-color: #1c1c1c;
+  --hover-bg: #1c1c1c;
+  --hover-text: #ffffff;
+  --subtitle-color: rgba(28, 28, 28, 0.8);
+  --heading-color: #1c1c1c;
+  --nav-bg: #EBEBEB;
+  --link-color: #1c1c1c;
+  --column-text: #1c1c1c;
+  --column-bg: transparent;
+}
+
+:root.dark {
+  --bg-color: #000000;  /* Changed from #1c1c1c to pure black */
+  --text-color: #ffffff;
+  --hover-bg: #2a2a2a;
+  --hover-text: #ffffff;
+  --subtitle-color: rgba(255, 255, 255, 0.8);
+  --heading-color: #ffffff;
+  --nav-bg: #000000;  /* Changed to match background */
+  --link-color: #ffffff;
+  --column-text: #ffffff;  /* Added for white text in columns */
+  --column-bg: #000000;  /* Added for dark background in columns */
+}
+
+/* Add transition to all elements for smooth dark mode changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 .work-content {
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
@@ -5,6 +36,37 @@
 
 .loading .work-content {
   opacity: 0;
+}
+
+/* Dark mode specific styles */
+.dark .motion-h1,
+.dark .motion-p,
+.dark .nav-text,
+.dark .collaboration-text {
+  color: var(--text-color);
+}
+
+.dark .project-title {
+  color: var(--heading-color);
+}
+
+.dark .project-subtitle {
+  color: var(--subtitle-color);
+}
+
+.dark .project-link {
+  color: var(--link-color);
+}
+
+/* Add transitions for smooth color changes */
+.motion-h1,
+.motion-p,
+.nav-text,
+.collaboration-text,
+.project-title,
+.project-subtitle,
+.project-link {
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 /* Add any additional styles needed for the work page */

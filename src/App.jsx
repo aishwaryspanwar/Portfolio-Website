@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Contact from "./pages/Contact"; // Make sure this path is correct
 import Work from "./pages/Work";
 import LoadingCursor from './components/LoadingCursor';
+import './pages/Home.css';
 
 const FolioHeader = () => (
   <div
@@ -430,8 +431,8 @@ function App() {
                     <div
                       className="min-h-screen flex flex-col items-center"
                       style={{
-                        backgroundColor: "#ebebeb",
-                        color: "#1c1c1c",
+                        backgroundColor: "var(--bg-color)",
+                        color: "var(--text-color)",
                         cursor: "none" // Hide the default mouse cursor
                       }}
                     >
@@ -656,7 +657,9 @@ function App() {
                           fontFamily: 'RoobertSemiMono, sans-serif',
                           fontSize: '0.79rem',
                           lineHeight: '1.08', // Decreased from 1.5
-                          zIndex: 1
+                          zIndex: 1,
+                          color: "var(--column-text)",
+                          backgroundColor: "var(--column-bg)"
                         }}
                       >
                         <img
@@ -707,7 +710,9 @@ function App() {
                           fontFamily: 'RoobertSemiMono, sans-serif',
                           fontSize: '0.79rem',
                           lineHeight: '1.08', // Decreased from 1.5
-                            zIndex: 1
+                            zIndex: 1,
+                          color: "var(--column-text)",
+                          backgroundColor: "var(--column-bg)"
                           }}
                           >
                           <img
@@ -731,7 +736,7 @@ function App() {
                             marginTop: '3.4rem',
                             fontWeight: 400,
                             fontSize: '10rem',
-                            color: '#1C1C1C',
+                            color: 'var(--text-color)',
                             letterSpacing: '-0.05em' // DECREASED BY 30% FROM 0.08EM
                           }}
                         >

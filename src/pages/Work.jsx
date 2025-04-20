@@ -137,16 +137,56 @@ function Work() {
   const [activeAlbumIdx, setActiveAlbumIdx] = useState(0);
   
   const ALBUMS_DATA = [
-    { title: "Angry Bird Clone", subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression." },
-    { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
-    { title: "MAST AI", subtitle: "MySQL + Machine learning Project" },
-    { title: "RISC32I Assembler - Simulato", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
-    { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
-    { title: "NAV IQ", subtitle: "An Android app prototype with AR-based indoor navigation for the R&D building, helping users find rooms and view professor information easily." },
-    { title: "Angry Bird Clone", subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression." },
-    { title: "ACM SIGCHI IIITD Website", subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP." },
-    { title: "MAST AI", subtitle: "MySQL + Machine learning Project" },
-    { title: "RISC32I Assembler - Simulato", subtitle: "Built a three-pass assembler and simulator for RISC-V 32I architecture in Python with real-time memory/register visualization." },
+    { 
+      title: "Angry Bird Clone", 
+      subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression.",
+      link: "https://github.com/MidamSri/AngryBird"
+    },
+    { 
+      title: "ACM SIGCHI IIITD Website", 
+      subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP.",
+      link: "https://sigchi.iiitd.ac.in/"
+    },
+    { 
+      title: "MAST AI", 
+      subtitle: "MySQL + Machine learning Project",
+      link: "https://github.com/sarabjeetsingh1708/dbms"
+    },
+    { 
+      title: "RISC32I Assembler - Simulator", 
+      subtitle: "Built a three-pass assembler and Simulatorr for RISC-V 32I architecture in Python with real-time memory/register visualization.",
+      link: "https://github.com/aishwaryspanwar/risc32i"
+    },
+    { 
+      title: "ACM SIGCHI IIITD Website", 
+      subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP.",
+      link: "https://sigchi.iiitd.ac.in/"
+    },
+    { 
+      title: "NAV IQ", 
+      subtitle: "An Android app prototype with AR-based indoor navigation for the R&D building, helping users find rooms and view professor information easily.",
+      link: "https://www.figma.com/slides/xrP0Jozdtd9S3xlYuZthyy/Project-3-Part-A--Mid-Evaluation?node-id=1-34&t=KQMTeoo4tcFDmyRt-1"
+    },
+    { 
+      title: "Angry Bird Clone", 
+      subtitle: "A physics-based 2D game built using Java and LibGDX, incorporating bird abilities, power-ups, and level progression.",
+      link: "https://github.com/MidamSri/AngryBird"
+    },
+    { 
+      title: "ACM SIGCHI IIITD Website", 
+      subtitle: "Developed a responsive and animated website for the ACM ACM SIGCHI IIITD Website chapter using React.js, Tailwind CSS, Vite, and GSAP.",
+      link: "https://sigchi.iiitd.ac.in/"
+    },
+    { 
+      title: "MAST AI", 
+      subtitle: "MySQL + Machine learning Project",
+      link: "https://github.com/sarabjeetsingh1708/dbms"
+    },
+    { 
+      title: "RISC32I Assembler - Simulator", 
+      subtitle: "Built a three-pass assembler and Simulatorr for RISC-V 32I architecture in Python with real-time memory/register visualization.",
+      link: "https://github.com/aishwaryspanwar/risc32i"
+    }
   ];
 
   useEffect(() => {
@@ -245,10 +285,11 @@ function Work() {
             <div 
               className="min-h-screen flex flex-col items-center"
               style={{
-                backgroundColor: "#ebebeb",
-                color: "#1c1c1c",
+                backgroundColor: "var(--bg-color, #ebebeb)",
+                color: "var(--text-color, #1c1c1c)",
                 position: "relative",
-                overflow: "hidden"
+                overflow: "hidden",
+                transition: "background-color 0.3s ease, color 0.3s ease"
               }}
             >
               {/* Collaboration text */}
@@ -261,7 +302,8 @@ function Work() {
                   fontWeight: 400,
                   letterSpacing: '0.02em',
                   zIndex: 10,
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
+                  color: "var(--text-color, #1c1c1c)"
                 }}
               >
                 Open for any
@@ -274,23 +316,23 @@ function Work() {
                 className="fixed top-1/2 left-0 transform -translate-y-1/2 w-full flex justify-center bg-transparent overflow-hidden transition-all duration-500 group"
                 style={{
                   height: '4%',
-                  backgroundColor: '#ebebeb',
-                  color: "#1c1c1c",
+                  backgroundColor: "var(--bg-color, #ebebeb)",
+                  color: "var(--text-color, #1c1c1c)",
                   zIndex: 20,
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.height = '17%';
-                  e.currentTarget.style.backgroundColor = '#1c1c1c';
+                  e.currentTarget.style.backgroundColor = 'var(--hover-bg, #1c1c1c)';
                   e.currentTarget.style.paddingTop = '2.8rem';
                   const links = e.currentTarget.querySelectorAll('.flip-link, .copyright-text');
-                  links.forEach(link => link.style.color = '#fff');
+                  links.forEach(link => link.style.color = 'var(--hover-text, #fff)');
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.height = '4%';
-                  e.currentTarget.style.backgroundColor = '#ebebeb';
+                  e.currentTarget.style.backgroundColor = 'var(--bg-color, #ebebeb)';
                   e.currentTarget.style.paddingTop = '0rem';
                   const links = e.currentTarget.querySelectorAll('.flip-link, .copyright-text');
-                  links.forEach(link => link.style.color = "#1c1c1c");
+                  links.forEach(link => link.style.color = "var(--text-color, #1c1c1c)");
                   setHoveredNav(null);
                 }}
               >
@@ -341,7 +383,7 @@ function Work() {
                 <AnimatePresence mode="wait">
                   <motion.h1
                     key={`title-${activeAlbumIdx}`}
-                    className="text-7xl font-roxborough-italic mb-4"
+                    className="text-5xl font-roxborough-italic mb-4 project-title"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -351,7 +393,7 @@ function Work() {
                   </motion.h1>
                   <motion.p
                     key={`subtitle-${activeAlbumIdx}`}
-                    className="text-xl font-roobertregular mb-16 opacity-80 mx-auto text-center"
+                    className="text-lg font-roobertregular mb-4 opacity-80 mx-auto text-center project-subtitle"
                     style={{ maxWidth: '37rem' }}  // Add max-width constraint
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -360,12 +402,71 @@ function Work() {
                   >
                     {ALBUMS_DATA[activeAlbumIdx]?.subtitle || "Projects & Collaborations"}
                   </motion.p>
+                  <motion.a
+                    href={ALBUMS_DATA[activeAlbumIdx]?.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={`link-${activeAlbumIdx}`}
+                    className="group flex items-center space-x-2 text-base font-roobertregular hover:opacity-100 transition-all mb-16 project-link"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 0.7, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
+                    style={{ width: 'fit-content' }}
+                  >
+                    <span 
+                      className="group-hover:font-roxborough-italic group-hover:italic group-hover:font-bold text-lg transition-all duration-500"
+                      style={{ 
+                        transitionProperty: 'all, font-family, color',
+                        transition: 'color 0.3s ease'
+                      }}
+                    >
+                      <span className="group-hover:text-blue-500">Link</span>
+                    </span>
+                    <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 group-hover:text-blue-500 text-lg">
+                      →
+                    </span>
+                  </motion.a>
                 </AnimatePresence>
                 
                 {/* Carousel Container */}
                 <div className="w-full h-[20vh] relative">
                   <AlbumCarousel onSlideChange={setActiveAlbumIdx} />
                 </div>
+              </div>
+
+              {/* Left descriptive text */}
+              <div
+                className="fixed max-w-[300px] text-center"
+                style={{
+                  top: '80%',
+                  left: '10%',
+                  fontFamily: 'RoobertSemiMono, sans-serif',
+                  fontSize: '0.79rem',
+                  lineHeight: '1.08',
+                  zIndex: 1,
+                  color: 'var(--column-text)',
+                  backgroundColor: 'var(--column-bg)'
+                }}
+              >
+                {/* Add your left descriptive text here */}
+              </div>
+
+              {/* Right descriptive text */}
+              <div
+                className="fixed max-w-[300px] text-center"
+                style={{
+                  top: '80%',
+                  right: '10%',
+                  fontFamily: 'RoobertSemiMono, sans-serif',
+                  fontSize: '0.79rem',
+                  lineHeight: '1.08',
+                  zIndex: 1,
+                  color: 'var(--column-text)',
+                  backgroundColor: 'var(--column-bg)'
+                }}
+              >
+                {/* Add your right descriptive text here */}
               </div>
             </div>
           )}

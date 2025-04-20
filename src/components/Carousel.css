@@ -55,38 +55,6 @@
   transform: translateZ(0);
 }
 
-.controls {
-  position: absolute;
-  bottom: -2rem; /* Move controls down */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 2rem;
-  z-index: 100;
-}
-
-.controls button {
-  background: #1c1c1c;
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.2s;
-  transform: translateZ(200px);
-}
-
-.controls button:hover {
-  transform: scale(1.1);
-}
-
-.controls button svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
 .drag-proxy {
   visibility: hidden;
   position: absolute;
@@ -132,4 +100,34 @@
   60% {
     transform: translateY(-5px);
   }
+}
+
+.control-button {
+  position: fixed;
+  top: 66%;
+  transform: translateY(-50%);
+  background: none;
+  border: solid #1c1c1c;
+  border-width: 0 3px 3px 0;
+  padding: 12px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  z-index: 100;
+  margin-top: 3rem;
+}
+
+.control-button:hover {
+  opacity: 1;
+  border-color: #000;
+}
+
+.left-control {
+  left: 5rem;
+  transform: rotate(135deg);
+}
+
+.right-control {
+  right: 5rem;
+  transform: rotate(-45deg);
 }
