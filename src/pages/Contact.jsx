@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ThemeProvider } from "../context/ThemeContext";
 import CircleTrail from "../components/CircleTrail";
 import LoadingCursor from '../components/LoadingCursor';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const DURATION = 0.25;
 const STAGGER = 0.025;
@@ -342,59 +343,169 @@ function Contact() {
                   </li>
                 </ul>
               </nav>
+
+              {/* Add Lottie Animation */}
+              <div className="fixed right-32" style={{ top: '55%', zIndex: 2 }}>
+                <DotLottieReact
+                  src="https://lottie.host/fc6a5cd7-7758-441a-8785-b25ef5a420a7/S5pbSn3klM.lottie"
+                  loop
+                  autoplay
+                  style={{ width: '20rem', height: '20rem' }}
+                />
+              </div>
+
+              {/* Links Section */}
+              <div className="fixed w-full top-1/2 mt-20 px-32" style={{ zIndex: 2 }}>
+                {/* All Links Container */}
+                <div className="flex gap-32">
+                  {/* Left Column */}
+                  <div className="space-y-8">
+                    <div>
+                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Tech</h2>
+                      <div className="space-y-2">
+                        <a 
+                          href="https://leetcode.com/u/homelander0_0/" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="group flex items-center space-x-2 text-sm font-roobertregular hover:opacity-100 transition-all"
+                          style={{ width: 'fit-content', lineHeight: '1' }}
+                        >
+                          <span className="group-hover:font-roxborough-italic group-hover:italic group-hover:font-bold transition-all duration-500" style={{ transitionProperty: 'all, font-family' }}>
+                            Leetcode
+                          </span>
+                          <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            →
+                          </span>
+                        </a>
+                        <a 
+                          href="https://github.com/aishwaryspanwar" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="group flex items-center space-x-2 text-sm font-roobertregular hover:opacity-100 transition-all"
+                          style={{ width: 'fit-content', lineHeight: '1' }}
+                        >
+                          <span className="group-hover:font-roxborough-italic group-hover:italic group-hover:font-bold transition-all duration-500" style={{ transitionProperty: 'all, font-family' }}>
+                            Github
+                          </span>
+                          <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            →
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Social</h2>
+                      <div className="space-y-2">
+                        {/* Removed Facebook link */}
+                        <a 
+                          href="https://instagram.com/aishwarypanwar/" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="group flex items-center space-x-2 text-sm font-roobertregular hover:opacity-100 transition-all"
+                          style={{ width: 'fit-content', lineHeight: '1' }}
+                        >
+                          <span className="group-hover:font-roxborough-italic group-hover:italic group-hover:font-bold transition-all duration-500" style={{ transitionProperty: 'all, font-family' }}>
+                            Instagram
+                          </span>
+                          <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            →
+                          </span>
+                        </a>
+                        <a 
+                          href="https://www.linkedin.com/in/aishwary-singh-panwar-25066a10a/" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="group flex items-center space-x-2 text-sm font-roobertregular hover:opacity-100 transition-all"
+                          style={{ width: 'fit-content', lineHeight: '1' }}
+                        >
+                          <span className="group-hover:font-roxborough-italic group-hover:italic group-hover:font-bold transition-all duration-500" style={{ transitionProperty: 'all, font-family' }}>
+                            LinkedIn
+                          </span>
+                          <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            →
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column (now next to left) */}
+                  <div className="space-y-8">
+                    <div>
+                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Portfolio</h2>
+                      <div className="space-y-2">
+                        <a 
+                          href="https://www.behance.net/aishwaryspanwar" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="group flex items-center space-x-2 text-sm font-roobertregular hover:opacity-100 transition-all"
+                          style={{ width: 'fit-content', lineHeight: '1' }}
+                        >
+                          <span className="group-hover:font-roxborough-italic group-hover:italic group-hover:font-bold transition-all duration-500" style={{ transitionProperty: 'all, font-family' }}>
+                            Behance
+                          </span>
+                          <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            →
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-roobertregular mb-3" style={{ opacity: 1, fontWeight: 500, color: "#878787" }}>Email</h2>
+                      <div className="space-y-2">
+                        <a
+                          href="https://mail.google.com/mail/?view=cm&fs=1&to=aishwarypanwar@gmail.com&su=Loved%20Your%20Portfolio%20Website!"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex items-center space-x-2 text-sm font-roobertregular hover:opacity-100 transition-all"
+                          style={{ width: 'fit-content', lineHeight: '1' }}
+                        >
+                          <span className="group-hover:font-roxborough-italic group-hover:italic group-hover:font-bold transition-all duration-500" style={{ transitionProperty: 'all, font-family' }}>
+                            aishwarypanwar@gmail.com
+                          </span>
+                          <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            →
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Heading */}
-              <main className="text-center" style={{ zIndex: 2, marginTop: '6.7rem' }}>
+              <main className="text-center" style={{ zIndex: 2, marginTop: '9.7rem' }}>
                 <h1
                   className="text-[5rem] md:text-[8rem] font-roxborough"
                   style={{
                     fontWeight: 400,
-                    fontSize: '4.8rem', // Decreased by 40% from 8rem
+                    fontSize: '4.8rem',
                     color: '#1C1C1C',
                     letterSpacing: '-0.05em',
                     maxWidth: '100%',
-                    lineHeight: '1.1' // Added smaller line height
+                    lineHeight: '1.1'
                   }}
                 >
                   {/* Staggered animation for each letter */}
                   {(() => {
-                    const phrase = "Let's collaborate";
-                    const secondPhrase = "and make good sh*t together";
+                    const phrase = "Got Something to Say?";
                     return (
-                      <>
-                        <span className="font-roxborough-italic" style={{ fontStyle: "italic" }}>
-                          {phrase.split("").map((char, idx) => (
-                            <span
-                              key={`first-${idx}`}
-                              style={{
-                                display: 'inline-block',
-                                opacity: 0,
-                                transform: 'translateY(40px)',
-                                animation: `fadeInUp 0.6s cubic-bezier(0.4,0,0.2,1) forwards`,
-                                animationDelay: `${idx * 0.06 + 0.2}s`
-                              }}
-                            >
-                              {char === " " ? "\u00A0" : char}
-                            </span>
-                          ))}
-                        </span>
-                        <br />
-                        <span className="font-roobertregular" style={{ fontWeight: 400 }}>
-                          {secondPhrase.split("").map((char, idx) => (
-                            <span
-                              key={`second-${idx}`}
-                              style={{
-                                display: 'inline-block',
-                                opacity: 0,
-                                transform: 'translateY(40px)',
-                                animation: `fadeInUp 0.6s cubic-bezier(0.4,0,0.2,1) forwards`,
-                                animationDelay: `${(phrase.length + idx) * 0.06 + 0.2}s`
-                              }}
-                            >
-                              {char === " " ? "\u00A0" : char}
-                            </span>
-                          ))}
-                        </span>
-                      </>
+                      <span className="font-roxborough-italic" style={{ fontStyle: "italic" }}>
+                        {phrase.split("").map((char, idx) => (
+                          <span
+                            key={`text-${idx}`}
+                            style={{
+                              display: 'inline-block',
+                              opacity: 0,
+                              transform: 'translateY(40px)',
+                              animation: `fadeInUp 0.6s cubic-bezier(0.4,0,0.2,1) forwards`,
+                              animationDelay: `${idx * 0.06 + 0.2}s`
+                            }}
+                          >
+                            {char === " " ? "\u00A0" : char}
+                          </span>
+                        ))}
+                      </span>
                     );
                   })()}
                 </h1>

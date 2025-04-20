@@ -337,7 +337,7 @@ function Work() {
               </nav>
 
               {/* Main Content */}
-              <div className="w-full flex flex-col items-center pt-32 relative z-10">
+              <div className="w-full flex flex-col items-center pt-32 relative z-60">
                 <AnimatePresence mode="wait">
                   <motion.h1
                     key={`title-${activeAlbumIdx}`}
@@ -346,7 +346,7 @@ function Work() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                  >
+                  > 
                     {ALBUMS_DATA[activeAlbumIdx]?.title || "Selected Work"}
                   </motion.h1>
                   <motion.p
