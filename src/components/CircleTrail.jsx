@@ -1,59 +1,58 @@
-import React, { useEffect, useRef } from "react";
-import "../CircleTrail.css";
+import { useEffect, useRef } from 'react';
 
+const COUNT = 21;
+const RADIUS = 7;
+
+// Trail of shrinking dots that follows the mouse. Hidden on touch devices via CSS.
 const CircleTrail = () => {
   const circlesRef = useRef([]);
-  const coords = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      coords.current.x = e.clientX;
-      coords.current.y = e.clientY;
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-  useEffect(() => {
-    circlesRef.current.forEach((circle, index) => {
-      if (circle) {
-        circle.x = 0;
-        circle.y = 0;
-        circle.style.backgroundColor = "#1c1c1c";
-      }
-    });
+    const circles = circlesRef.current;
+    const mouse = { x: 0, y: 0 };
+    const points = circles.map(() => ({ x: 0, y: 0 }));
+    let frame = null;
 
-    const animateCircles = () => {
-      let x = coords.current.x;
-      let y = coords.current.y;
-      circlesRef.current.forEach((circle, index) => {
-        if (circle) {
-          circle.style.left = x - 7 + "px";
-          circle.style.top = y - 7 + "px";
-          const scale = (circlesRef.current.length - index) / circlesRef.current.length;
-          circle.style.transform = `scale(${scale})`;
-          circle.x = x;
-          circle.y = y;
-          const nextCircle = circlesRef.current[index + 1] || circlesRef.current[0];
-          x += (nextCircle.x - x) * 0.3;
-          y += (nextCircle.y - y) * 0.3;
-        }
+    const animate = () => {
+      let { x, y } = mouse;
+      points.forEach((point, i) => {
+        point.x = x;
+        point.y = y;
+        const scale = (COUNT - i) / COUNT;
+        circles[i].style.transform = `translate(${x - RADIUS}px, ${y - RADIUS}px) scale(${scale})`;
+        const next = points[i + 1] || points[0];
+        x += (next.x - x) * 0.3;
+        y += (next.y - y) * 0.3;
       });
-      requestAnimationFrame(animateCircles);
+      frame = requestAnimationFrame(animate);
     };
-    animateCircles();
+
+    const handleMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      if (frame === null) {
+        // Start on the first move so the trail doesn't sit in the top-left corner.
+        points.forEach((p) => { p.x = mouse.x; p.y = mouse.y; });
+        circles.forEach((c) => { c.style.opacity = '1'; });
+        frame = requestAnimationFrame(animate);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
-    <>
-      {[...Array(21)].map((_, i) => (
-        <div
-          key={i}
-          ref={(el) => (circlesRef.current[i] = el)}
-          className="circle"
-        ></div>
+    <div aria-hidden="true">
+      {Array.from({ length: COUNT }, (_, i) => (
+        <div key={i} ref={(el) => (circlesRef.current[i] = el)} className="circle" />
       ))}
-    </>
+    </div>
   );
 };
 

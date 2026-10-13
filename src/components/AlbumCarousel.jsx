@@ -1,134 +1,75 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Draggable from 'gsap/Draggable';
 import debounce from 'lodash/debounce';
+import clickSoundUrl from '../audio/audio.mp3';
 import './Carousel.css';
-import audioFile from '/src/audio/audio.mp3';  // Using absolute path from src root
 
-const COVERS = [
-    "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*IOWhMijeI03LYVmVhW4QXw.jpeg",
-    "https://sigchi.iiitd.ac.in/_next/static/media/image1.a1adfd7b.svg",
-    "/src/images/mast.png",
-    "https://img.electronicdesign.com/files/base/ebm/electronicdesign/image/2020/11/RISC_V_logo.5fa1b8aab3304.png?auto=format%2Ccompress&w=640&width=640",
-    "https://sigchi.iiitd.ac.in/_next/static/media/image1.a1adfd7b.svg",
-    "https://img.freepik.com/free-vector/navigation-concept-illustration_114360-956.jpg",
-    "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*IOWhMijeI03LYVmVhW4QXw.jpeg",
-    "https://sigchi.iiitd.ac.in/_next/static/media/image1.a1adfd7b.svg",
-    "/src/images/mast.png",
-    "https://img.electronicdesign.com/files/base/ebm/electronicdesign/image/2020/11/RISC_V_logo.5fa1b8aab3304.png?auto=format%2Ccompress&w=640&width=640",
-  ];
+gsap.registerPlugin(ScrollTrigger, Draggable);
 
-  export default function AlbumCarousel({ onSlideChange }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const containerRef = useRef(null);
-    const boxesRef = useRef([]);
-    const proxyRef = useRef(null);
-    const audioRef = useRef(new Audio(audioFile));
+// 3D looping cover-flow driven by page scroll, drag, arrow buttons, keys, and clicks.
+// `covers` is a list of { src, alt }; `onSlideChange` receives the active index.
+export default function AlbumCarousel({ covers, onSlideChange }) {
+  const containerRef = useRef(null);
+  const boxesRef = useRef([]);
+  const proxyRef = useRef(null);
+  const leftButtonRef = useRef(null);
+  const rightButtonRef = useRef(null);
+  const onSlideChangeRef = useRef(onSlideChange);
+  onSlideChangeRef.current = onSlideChange;
 
-    // Play sound function
+  useEffect(() => {
+    const container = containerRef.current;
+    const leftButton = leftButtonRef.current;
+    const rightButton = rightButtonRef.current;
+    const boxes = boxesRef.current.slice(0, covers.length);
+
+    const clickSound = new Audio(clickSoundUrl);
+    clickSound.volume = 0.6;
     const playClickSound = () => {
-      audioRef.current.currentTime = 0; // Reset audio to start
-      audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
     };
-  
-    // Debounced slide change handler
-    const debouncedSlideChange = useRef(
-      debounce((index) => {
-        if (currentIndex !== index) {
-          setCurrentIndex(index);
-          onSlideChange?.(index);
-        }
-      }, 150)
-    ).current;
-  
-    useEffect(() => {
-      gsap.registerPlugin(ScrollTrigger, Draggable);
-      const boxes = boxesRef.current;
-      
-      gsap.set(boxes, { 
-        yPercent: -50,
-        display: 'block'
-      });
-  
+
+    let lastIndex = -1;
+    const emitSlideChange = debounce((index) => {
+      if (index !== lastIndex) {
+        lastIndex = index;
+        onSlideChangeRef.current?.(index);
+      }
+    }, 150);
+
+    const ctx = gsap.context(() => {
+      gsap.set(boxes, { yPercent: -50, display: 'block' });
+
       const STAGGER = 0.1;
       const DURATION = 1;
-      const OFFSET = 0;
 
-      const wrap = (value, min, max) => {
-        const range = max - min;
-        return min + ((((value - min) % range) + range) % range);
-      };
-  
-      const LOOP = gsap.timeline({
-        paused: true,
-        repeat: -1,
-        ease: 'none',
-      });
-  
+      const LOOP = gsap.timeline({ paused: true, repeat: -1, ease: 'none' });
       const SHIFTS = [...boxes, ...boxes, ...boxes];
-  
+
       SHIFTS.forEach((box, i) => {
-        const tl = gsap.timeline()
-          .set(box, {
-            xPercent: 200,
-            rotateY: -50,
-            opacity: 0,
-            scale: 0.5,
-            zIndex: i
-          })
-          .to(box, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.out"
-          }, 0)
-          .to(box, {
-            opacity: 0,
-            scale: 0.5,
-            duration: 0.3,
-            ease: "power2.in"
-          }, 0.7)
-          .fromTo(box,
-            { xPercent: 200 },
-            {
-              xPercent: -200, // Reduced negative range to match left offset
-              duration: 1,
-              immediateRender: false,
-              ease: 'power2.inOut',
-            }, 0)
-          .fromTo(box,
-            { rotateY: -45 },
-            {
-              rotateY: 45,
-              immediateRender: false,
-              duration: 1,
-              ease: 'power2.inOut',
-            }, 0)
-          .fromTo(box,
-            { zIndex: 1 },
-            {
-              zIndex: boxes.length,
-              duration: 0.5,
-              immediateRender: false
-            }, 0.25);
+        const tl = gsap
+          .timeline()
+          .set(box, { xPercent: 200, rotateY: -50, opacity: 0, scale: 0.5, zIndex: i })
+          .to(box, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' }, 0)
+          .to(box, { opacity: 0, scale: 0.5, duration: 0.3, ease: 'power2.in' }, 0.7)
+          .fromTo(box, { xPercent: 200 }, { xPercent: -200, duration: 1, immediateRender: false, ease: 'power2.inOut' }, 0)
+          .fromTo(box, { rotateY: -45 }, { rotateY: 45, immediateRender: false, duration: 1, ease: 'power2.inOut' }, 0)
+          .fromTo(box, { zIndex: 1 }, { zIndex: boxes.length, duration: 0.5, immediateRender: false }, 0.25);
         LOOP.add(tl, i * STAGGER);
       });
-  
+
       const cycleDur = STAGGER * boxes.length;
-      const startTime = cycleDur + DURATION * 0.5 + OFFSET;
-  
-      const head = gsap.fromTo(LOOP,
+      const startTime = cycleDur + DURATION * 0.5;
+
+      const head = gsap.fromTo(
+        LOOP,
         { totalTime: startTime },
-        { 
-          totalTime: `+=${cycleDur}`,
-          duration: 1,
-          ease: 'none',
-          repeat: -1,
-          paused: true,
-        }
+        { totalTime: `+=${cycleDur}`, duration: 1, ease: 'none', repeat: -1, paused: true }
       );
-  
+
       const playhead = { pos: 0 };
       const wrapTime = gsap.utils.wrap(0, head.duration());
       const scrub = gsap.to(playhead, {
@@ -138,45 +79,20 @@ const COVERS = [
         duration: 0.25,
         ease: 'power3',
       });
-  
+
       let iteration = 0;
-      const wrapIteration = (iterationDelta, scrollTo) => {
-        iteration += iterationDelta;
-        trigger.scroll(scrollTo);
-        trigger.update();
-      };
-
       const snap = gsap.utils.snap(1 / boxes.length);
-
-      const progressToScroll = progress =>
-        gsap.utils.clamp(
-          1,
-          trigger.end - 1,
-          gsap.utils.wrap(0, 1, progress) * trigger.end
-        );
 
       const updateActiveSlide = (position) => {
         const normalizedPos = gsap.utils.wrap(0, 1, position);
-        const index = Math.round(normalizedPos * boxes.length) % boxes.length;
-        debouncedSlideChange(index);
+        emitSlideChange(Math.round(normalizedPos * boxes.length) % boxes.length);
       };
 
-      const scrollToPosition = position => {
-        const snapPos = snap(position);
-        const progress = (snapPos - head.duration() * iteration) / head.duration();
-        const scroll = progressToScroll(progress);
-        updateActiveSlide(snapPos);
-        if (progress >= 1 || progress < 0) return wrapIteration(Math.floor(progress), scroll);
-        trigger.scroll(scroll);
-      };
-
+      // Scrolling the page moves the carousel; the scroll position wraps for an endless loop.
       const trigger = ScrollTrigger.create({
-        trigger: containerRef.current,
         start: 0,
         end: '+=2000',
-        horizontal: false,
-        pin: true,
-        onUpdate: self => {
+        onUpdate: (self) => {
           const scroll = self.scroll();
           if (scroll > self.end - 1) {
             wrapIteration(1, 1);
@@ -188,29 +104,48 @@ const COVERS = [
             scrub.invalidate().restart();
             updateActiveSlide(newPos);
           }
-        }
+        },
       });
-  
-      const next = () => {
+
+      function wrapIteration(iterationDelta, scrollTo) {
+        iteration += iterationDelta;
+        trigger.scroll(scrollTo);
+        trigger.update();
+      }
+
+      const progressToScroll = (progress) =>
+        gsap.utils.clamp(1, trigger.end - 1, gsap.utils.wrap(0, 1, progress) * trigger.end);
+
+      const scrollToPosition = (position) => {
+        const snapPos = snap(position);
+        const progress = (snapPos - head.duration() * iteration) / head.duration();
+        const scroll = progressToScroll(progress);
+        updateActiveSlide(snapPos);
+        if (progress >= 1 || progress < 0) return wrapIteration(Math.floor(progress), scroll);
+        trigger.scroll(scroll);
+      };
+
+      const goLeft = () => {
         playClickSound();
         scrollToPosition(scrub.vars.pos - 1 / boxes.length);
       };
-      const prev = () => {
+      const goRight = () => {
         playClickSound();
         scrollToPosition(scrub.vars.pos + 1 / boxes.length);
       };
-  
-      ScrollTrigger.addEventListener('scrollEnd', () => 
-        scrollToPosition(scrub.vars.pos)
-      );
-  
-      document.querySelector('.next').addEventListener('click', next);
-      document.querySelector('.prev').addEventListener('click', prev);
-  
-      Draggable.create(proxyRef.current, {
+
+      const handleScrollEnd = () => scrollToPosition(scrub.vars.pos);
+      ScrollTrigger.addEventListener('scrollEnd', handleScrollEnd);
+
+      leftButton.addEventListener('click', goLeft);
+      rightButton.addEventListener('click', goRight);
+
+      const [drag] = Draggable.create(proxyRef.current, {
         type: 'x',
-        trigger: '.box',
-        onPress() { this.startOffset = scrub.vars.pos; },
+        trigger: boxes,
+        onPress() {
+          this.startOffset = scrub.vars.pos;
+        },
         onDrag() {
           const newPos = this.startOffset + (this.startX - this.x) * 0.001;
           scrub.vars.pos = newPos;
@@ -219,74 +154,67 @@ const COVERS = [
         },
         onDragEnd() {
           scrollToPosition(scrub.vars.pos);
-        }
+        },
       });
-  
-      // Add keyboard controls
+
       const handleKeydown = (event) => {
-        if (event.code === 'ArrowLeft' || event.code === 'KeyA') next();
-        if (event.code === 'ArrowRight' || event.code === 'KeyD') prev();
+        if (event.target.closest?.('input, textarea, [contenteditable]')) return;
+        if (event.code === 'ArrowLeft' || event.code === 'KeyA') goLeft();
+        if (event.code === 'ArrowRight' || event.code === 'KeyD') goRight();
       };
-      
       document.addEventListener('keydown', handleKeydown);
-  
-      // Add box click handling
+
       const handleBoxClick = (e) => {
         const box = e.target.closest('.box');
-        if (box) {
-          playClickSound();
-          const target = boxes.indexOf(box);
-          const current = gsap.utils.wrap(
-            0,
-            boxes.length,
-            Math.floor(boxes.length * scrub.vars.pos)
-          );
-          let bump = target - current;
-          if (target > current && target - current > boxes.length * 0.5) {
-            bump = (boxes.length - bump) * -1;
-          }
-          if (current > target && current - target > boxes.length * 0.5) {
-            bump = boxes.length + bump;
-          }
-          scrollToPosition(scrub.vars.pos + bump * (1 / boxes.length));
+        if (!box) return;
+        playClickSound();
+        const target = boxes.indexOf(box);
+        const current = gsap.utils.wrap(0, boxes.length, Math.floor(boxes.length * scrub.vars.pos));
+        let bump = target - current;
+        if (target > current && target - current > boxes.length * 0.5) {
+          bump = (boxes.length - bump) * -1;
         }
+        if (current > target && current - target > boxes.length * 0.5) {
+          bump = boxes.length + bump;
+        }
+        scrollToPosition(scrub.vars.pos + bump * (1 / boxes.length));
       };
-  
-      containerRef.current.addEventListener('click', handleBoxClick);
-  
-      // Cleanup
+      container.addEventListener('click', handleBoxClick);
+
       return () => {
-        debouncedSlideChange.cancel();
-        ScrollTrigger.killAll();
+        ScrollTrigger.removeEventListener('scrollEnd', handleScrollEnd);
+        leftButton.removeEventListener('click', goLeft);
+        rightButton.removeEventListener('click', goRight);
         document.removeEventListener('keydown', handleKeydown);
-        containerRef.current?.removeEventListener('click', handleBoxClick);
-        audioRef.current.pause();
-        audioRef.current.src = '';
+        container.removeEventListener('click', handleBoxClick);
+        drag.kill();
       };
-    }, [onSlideChange]);
-  
-    return (
-      <>
-        <button className="next control-button left-control">
-          <span className="visually-hidden">Previous album</span>
-        </button>
-        <div ref={containerRef} className="boxes">
-          {COVERS.map((src, i) => (
-            <div
-              key={i}
-              className="box"
-              ref={el => (boxesRef.current[i] = el)}
-              style={{ '--src': `url(${src})` }}
-            >
-              <span className="visually-hidden">Album {i + 1}</span>
-              <img src={src} alt={`Album cover {i + 1}`} />
-            </div>
-          ))}
-        </div>
-        <button className="prev control-button right-control">
-          <span className="visually-hidden">Next album</span>
-        </button>
-        <div ref={proxyRef} className="drag-proxy"></div>
-      </>
-    );
-  }
+    }, container);
+
+    return () => {
+      emitSlideChange.cancel();
+      ctx.revert();
+      clickSound.pause();
+      clickSound.removeAttribute('src');
+    };
+  }, [covers]);
+
+  return (
+    <div className="carousel">
+      <button ref={leftButtonRef} type="button" className="control-button left-control">
+        <span className="sr-only">Previous project</span>
+      </button>
+      <div ref={containerRef} className="boxes">
+        {covers.map((cover, i) => (
+          <div key={i} className="box" ref={(el) => (boxesRef.current[i] = el)}>
+            <img src={cover.src} alt={cover.alt} draggable="false" />
+          </div>
+        ))}
+      </div>
+      <button ref={rightButtonRef} type="button" className="control-button right-control">
+        <span className="sr-only">Next project</span>
+      </button>
+      <div ref={proxyRef} className="drag-proxy" />
+    </div>
+  );
+}

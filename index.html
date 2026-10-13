@@ -2,9 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Aishwary Panwar</title>
+    <meta name="description" content="Portfolio of Aishwary Panwar, an engineering student at IIIT Delhi building beautiful digital experiences." />
+    <meta property="og:title" content="Aishwary Panwar" />
+    <meta property="og:description" content="Portfolio of Aishwary Panwar, an engineering student at IIIT Delhi building beautiful digital experiences." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#ebebeb" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Apply the saved or system theme before first paint to avoid a light flash.
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        // Storage blocked; React applies the system theme once it loads.
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
